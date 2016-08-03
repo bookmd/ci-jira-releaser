@@ -5,6 +5,7 @@ import os
 
 JIRA_USER_KEY = 'JIRA_USER'
 JIRA_PASSWORD_KEY = 'JIRA_PASSWORD'
+JIRA_URL = "JIRA_URL"
 BUILD_NUMBER_KEY = 'BUILD_NUMBER'
 
 def main():
@@ -24,14 +25,20 @@ def main():
 	args = parser.parse_args()
 	jira_username = os.environ.get(JIRA_USER_KEY, None)
 	jira_password = os.environ.get(JIRA_PASSWORD_KEY, None)
+	jira_url = os.environ.get(JIRA_URL, None)
 	build_number = os.environ.get(BUILD_NUMBER_KEY, None)
-	if jira_username is not None and jira_password is not None and build_number is None:
+	if jira_username is not None and jira_password is not None and jira_url is None and build_number is None:
 		updater = JiraReleaser(args.project_key, args.jira_url, jira_username=jira_username, \
 			jira_password=jira_password, repo_root=args.repo_root, from_commit=args.from_commit, \
 			to_commit=args.to_commit, is_development=args.development, is_production=args.production, \
 			build_number=args.build_number, project_name=args.project_name)
-	elif jira_username is not None and jira_password is not None and build_number is not None:
-		updater = JiraReleaser(args.project_key, args.jira_url, jira_username=jira_username, \
+	elif jira_username is not None and jira_password is not None and jira_url is not None and build_number is None:
+		updater = JiraReleaser(args.project_key, jira_url, jira_username=jira_username, \
+			jira_password=jira_password, repo_root=args.repo_root, from_commit=args.from_commit, \
+			to_commit=args.to_commit, is_development=args.development, is_production=args.production, \
+			build_number=args.build_number, project_name=args.project_name)
+	elif jira_username is not None and jira_password is not None and build_number is not None and jira_url is not None:
+		updater = JiraReleaser(args.project_key, jira_url, jira_username=jira_username, \
 			jira_password=jira_password, repo_root=args.repo_root, from_commit=args.from_commit, \
 			to_commit=args.to_commit, is_development=args.development, is_production=args.production, \
 			build_number=build_number, project_name=args.project_name)
