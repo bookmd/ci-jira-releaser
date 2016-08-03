@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='ci-jira-releaser',
-      version='0.3.8',
+      version='0.3.8.3',
       long_description=readme(),
       description='Simple way to release past(or current) commits within Jira',
       url='https://github.com/bookmd/jira-releaser',
