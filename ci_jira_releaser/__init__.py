@@ -28,9 +28,6 @@ def get_random_name(sep='_'):
 class JiraReleaser(object):
 	JIRA_ISSUE_REGEX = '[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+'
 
-	def test(self):
-		print(self.jira.project_versions(self.project_key)[0].released)
-
 	def create_jira(self, jira_base_url, jira_username, jira_password):
 		"""
 		"""
@@ -66,15 +63,17 @@ class JiraReleaser(object):
 			for fix in item.fields.fixVersions:
 				fixVersions.append({'name': fix.name})
 			item.update(fields={"fixVersions": fixVersions})
+		return '{} updated'.format(issues)
 
 	def update_issues_labels(self, issues):
 		"""
 		"""
 		for issue in issues:
 			item = self.jira.issue(issue)
-			label = self.create_jira_label()
+			label = self.create_jira_label().encode('utf-8')
 			item.fields.labels.append(label)
-			item.update(fields={"labels": issue.fields.labels})
+			item.update(fields={"labels": item.fields.labels})
+		return '{} updated'.format(issues)
 
 	def create_version_name(self):
 		"""
@@ -95,7 +94,7 @@ class JiraReleaser(object):
 		"""
 		"""
 		if self.is_development:
-			return self.project_name + '-dev-' + self.build_number
+			return self.project_name + '-dev-' + str(self.build_number)
 
 	def release_version(self, version):
 		version.update(fields={'released': True})
