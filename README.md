@@ -39,13 +39,13 @@ optional arguments:
 
 Don't forget you can use environment variables
   ```
+  ##Examples  
 
-  ##Example
-  ###Development
+  ###Development  
   ```
   ci-jira-releaser -p PROJ -u http://site.atlassian.net --from-commit SHA -r ~/my-project --project-name my-project --build-number 123 --development
   ```
-  ###Production
+  ###Production  
    ```
   ci-jira-releaser -p PROJ -u http://site.atlassian.net --from-commit SHA -r ~/my-project --production
   ```
