@@ -1,11 +1,18 @@
 from setuptools import setup
 
-setup(name='jira-releaser',
-      version='0.1',
-      description='The funniest joke in the world',
-      url='http://github.com/storborg/funniest',
-      author='Flying Circus',
-      author_email='flyingcircus@example.com',
+def readme():
+    with open('README.md') as f:
+        return f.read()
+
+setup(name='ci-jira-releaser',
+      version='0.3.2',
+      long_description=readme(),
+      description='Simple way to release past(or current) commits within Jira',
+      url='https://github.com/bookmd/jira-releaser',
+      author='Ben Waters',
+      author_email='ben@book-md.com',
       license='MIT',
-      packages=['funniest'],
+      packages=['ci_jira_releaser'],
+      install_requires=['jira', 'gitpython', 'requests'],
+      scripts=['bin/ci-jira-releaser'],
       zip_safe=False)
